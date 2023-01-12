@@ -1,4 +1,4 @@
-*/ Nom des lieux qui finissent pas 'um' */
+/* Nom des lieux qui finissent pas 'um' */
 SELECT * FROM lieu
 WHERE nom_lieu LIKE "%um";
 
@@ -9,7 +9,6 @@ GROUP BY id_lieu
 
 /*Nom des personnages + spécialité + adresse et lieu d'habitation, triés par lieu puis par nom
 de personnage */
-
 SELECT nom_personnage,nom_specialite,adresse_personnage,nom_lieu
 FROM personnage
 INNER JOIN specialite ON personnage.id_specialite =specialite.id_specialite
