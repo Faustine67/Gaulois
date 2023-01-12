@@ -29,6 +29,33 @@ INNER JOIN lieu ON bataille.id_lieu=lieu.id_lieu
 ORDER BY YEAR(date_bataille) DESC 
 
 /*Nom des potions + coût de réalisation de la potion (trié par coût décroissant). */
- SELECT nom_potion, (qte*cout_ingredient)
+ SELECT nom_potion, SUM(qte*cout_ingredient)
  FROM potion
- INNER JOIN composer
+ INNER JOIN composer ON potion.id_potion = composer.id_potion
+ INNER JOIN ingredient ON composer.id_ingredient = ingredient.id_ingredient
+ GROUP BY potion.nom_potion
+
+ /*Nom des ingrédients + coût + quantité de chaque ingrédient qui composent la potion 'Santé' */
+ SELECT nom_ingredient, cout_ingredient,qte
+ FROM ingredient
+ INNER JOIN composer ON ingredient.id_ingredient= composer.id_ingredient
+ INNER JOIN potion ON composer.id_potion= potion.id_potion
+ WHERE LOWER(nom_potion) LIKE 'santé'
+ 
+  /* Nom du ou des personnages qui ont pris le plus de casques dans la bataille 'Bataille du village 
+gaulois' */
+SELECT nom_personnage, qte
+FROM personnage
+INNER JOIN prendre_casque ON personnage.id_personnage= prendre_casque.id_personnage
+INNER JOIN bataille ON prendre_casque.id_bataille= bataille.id_bataille
+WHERE (nom_bataille) LIKE 'Bataille du village gaulois'
+ORDER BY (qte) DESC
+LIMIT 1
+
+/*Nom des personnages et leur quantité de potion bue (en les classant du plus grand buveur 
+au plus petit). */
+SELECT nom_personnage, SUM(dose_boire) AS 'qtt totale bue'
+FROM personnage
+INNER JOIN boire ON personnage.id_personnage = boire.id_personnage
+GROUP BY personnage.nom_personnage
+ORDER BY SUM(dose_boire) DESC 
