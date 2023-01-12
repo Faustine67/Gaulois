@@ -75,3 +75,11 @@ FROM type_casque
 INNER JOIN casque ON type_casque.id_type_casque=casque.id_type_casque
 GROUP BY type_casque.id_type_casque
 ORDER BY cout DESC
+
+/* Nom des potions dont un des ingredients est le poisson frais */
+SELECT nom_potion
+FROM potion
+INNER JOIN composer ON potion.id_potion=potion.id_potion
+INNER JOIN ingredient ON composer.id_ingredient= composer.id_ingredient
+WHERE LOWER(nom_ingredient) LIKE 'poisson frais'
+GROUP BY potion.nom_potion
