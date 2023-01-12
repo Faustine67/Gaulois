@@ -59,3 +59,11 @@ FROM personnage
 INNER JOIN boire ON personnage.id_personnage = boire.id_personnage
 GROUP BY personnage.nom_personnage
 ORDER BY SUM(dose_boire) DESC 
+
+/*Nom de la bataille où le nombre de casques pris a été le plus important */
+SELECT nom_bataille, SUM(qte) AS 'qtt totale casque'
+FROM bataille
+INNER JOIN prendre_casque ON bataille.id_bataille=prendre_casque.id_bataille
+GROUP BY bataille.nom_bataille
+ORDER BY SUM(qte) DESC
+LIMIT 1
