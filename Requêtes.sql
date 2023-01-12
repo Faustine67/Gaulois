@@ -67,3 +67,11 @@ INNER JOIN prendre_casque ON bataille.id_bataille=prendre_casque.id_bataille
 GROUP BY bataille.nom_bataille
 ORDER BY SUM(qte) DESC
 LIMIT 1
+
+/* Combien existe-t-il de casques de chaque type et quel est leur coût total ? (classés par 
+nombre décroissant)? */
+SELECT nom_type_casque, SUM(casque.cout_casque) AS cout
+FROM type_casque
+INNER JOIN casque ON type_casque.id_type_casque=casque.id_type_casque
+GROUP BY type_casque.id_type_casque
+ORDER BY cout DESC
