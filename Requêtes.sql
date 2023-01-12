@@ -83,3 +83,11 @@ INNER JOIN composer ON potion.id_potion=potion.id_potion
 INNER JOIN ingredient ON composer.id_ingredient= composer.id_ingredient
 WHERE LOWER(nom_ingredient) LIKE 'poisson frais'
 GROUP BY potion.nom_potion
+
+/* Nom des potions dont un des ingredients est le poisson frais */
+SELECT nom_potion
+FROM potion
+INNER JOIN composer ON potion.id_potion=potion.id_potion
+INNER JOIN ingredient ON composer.id_ingredient= composer.id_ingredient
+WHERE LOWER(nom_ingredient) LIKE '%poisson frais%'
+GROUP BY potion.nom_potion
