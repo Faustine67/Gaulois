@@ -91,3 +91,34 @@ INNER JOIN composer ON potion.id_potion=potion.id_potion
 INNER JOIN ingredient ON composer.id_ingredient= composer.id_ingredient
 WHERE LOWER(nom_ingredient) LIKE '%poisson frais%'
 GROUP BY potion.nom_potion
+
+/*Ajoutez le personnage suivant : Champdeblix, agriculteur résidant à la ferme Hantassion de Rotomagus */
+INSERT INTO personnage (nom_personnage, id_specialite, id_lieu, adresse_personnage)
+VALUES ('Champdeblix', 12, 6, 'Ferme Hantassion');
+
+/*Autorisez Bonemine à boire de la potion magique, elle est jalouse d'Iélosubmarine */
+INSERT INTO autoriser_boire (id_personnage, id_potion)
+VALUES ("12", "1")
+
+/*Supprimez les casques grecs qui n'ont jamais été pris lors d'une bataille */
+DELETE FROM casque
+WHERE id_type_casque = 2 
+AND id_casque NOT IN (SELECT id_casque FROM prendre_casque);
+
+/*Modifiez l'adresse de Zérozérosix: il a été mis en prison à Condate. */
+UPDATE personnage 
+SET adresse_personnage = 'En prison' 
+WHERE id_personnage = '23';
+UPDATE personnage 
+SET id_lieu ='9' 
+WHERE id_personnage = '23';
+
+/*La potion 'soupe' ne doit plus contenir de persil */
+DELETE FROM composer 
+WHERE id_potion = 9 
+AND id_ingredient = 19
+
+/*Obelix s'est trompé: ce sont 42 casque Weisenau, et non Ostrogoths, qu'il a pris lors de la bataille 'Attaque de la banque postale'. Corrigez son erreur. */
+UPDATE prendre_casque 
+SET id_casque='10'
+WHERE id_bataille='9'
